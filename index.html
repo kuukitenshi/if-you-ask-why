@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Signal Received</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: black;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    user-select: none;
+    position: relative;
+    height: 100vh;
+  }
+  #matrixCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  .content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 5vh auto;
+    text-align: center;
+    padding: 2em;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid #00ff00;
+    box-shadow: 0 0 20px #00ff00;
+  }
+  h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.3em;
+    text-shadow: 0 0 10px #00ff00;
+  }
+  p {
+    font-size: 1.2em;
+    line-height: 1.6em;
+    margin-bottom: 2em;
+  }
+  a {
+    color: #00cc00;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #00cc00;
+    padding: 0.4em 1em;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  a:hover {
+    background-color: #003300;
+  }
+  #img-label {
+    color: #00ff00;
+    font-weight: bold;
+    font-size: 1.3em;
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 5px #00ff00;
+    user-select: none;
+    margin-bottom: 2em;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrixCanvas"></canvas>
+
+<div class="content">
+  <h1>Signal Received</h1>
+  <p>
+    Files are rarely what they seem.<br>
+    Download and decide for yourself.
+  </p>
+  <p><a href="mr_r0b0t_xx_hidden_v2_7z_enc.png" download>mr_r0b0t_xx_hidden_v2_7z_enc.png</a></p>
+  <p style="color:#00ff00; user-select:text; font-size:0.9em;">
+    In crimson’s shadows, two whispers hide.
+  </p>
+</div>
+
+<script>
+
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+
+let width = window.innerWidth;
+let height = window.innerHeight;
+canvas.width = width;
+canvas.height = height;
+
+const letters = '01';
+const fontSize = 16;
+const columns = Math.floor(width / fontSize);
+const drops = Array(columns).fill(1);
+
+function draw() {
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.fillStyle = '#00ff00';
+  ctx.font = fontSize + 'px Courier New';
+
+  for (let i = 0; i < drops.length; i++) {
+    const text = letters.charAt(Math.floor(Math.random() * letters.length));
+    const x = i * fontSize;
+    const y = drops[i] * fontSize;
+
+    ctx.fillText(text, x, y);
+
+    if (y > height && Math.random() > 0.975) {
+      drops[i] = 0;
+    }
+    drops[i]++;
+  }
+}
+
+setInterval(draw, 35);
+
+window.addEventListener('resize', () => {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+});
+</script>
+
+</body>
+</html>
